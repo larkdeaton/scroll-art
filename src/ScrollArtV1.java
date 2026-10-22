@@ -2,32 +2,46 @@ import java.util.Random;
 
 public class ScrollArtV1 {
 static final int WIDTH = getTerminalWidth() - 1;
-static final int GIRAFEE_WIDTH = 24;
+static final int GIRAFEE_WIDTH = 54;
 static final int GIRAFEE_HEIGHT = 33;
 static final Random rand = new Random();
 
     public static void main(String[] args) throws InterruptedException {
         char[][] nextRows = new char[GIRAFEE_HEIGHT][WIDTH];
+        char[][] nextRows2 = new char[GIRAFEE_HEIGHT][WIDTH];
     
         for (int i = 0; i < nextRows.length; i++) {
             nextRows[i] = emptyRow();
+            nextRows2[i] = emptyRow();
         }
     
-        // Load your giraffe into the scrolling rows
-        char[][] giraffe = getBunny();
+        char[][] giraffe = getGiraffe();
+        char[][] elephant = getElephant();
     
         for (int y = 0; y < GIRAFEE_HEIGHT; y++) {
             for (int x = 0; x < GIRAFEE_WIDTH; x++) {
                 nextRows[y][x] = giraffe[y][x];
+                nextRows2[y][x] = elephant[y][x];
             }
         }
     
         while (true) {
-            System.out.println(new String(nextRows[0]));
+            char[] combinedRow = new char[WIDTH];
+            for (int x = 0; x < WIDTH; x++) {
+                if (x < nextRows2[0].length && nextRows2[0][x] != ' ') {
+                    combinedRow[x] = nextRows2[0][x];
+                } else {
+                    combinedRow[x] = nextRows[0][x];
+                }
+            }
+            System.out.println(new String(combinedRow));
+            
             shiftRowsUp(nextRows);
+            shiftRowsUp(nextRows2);
             Thread.sleep(40);
         }
-    }
+        }
+    
 
 
     // private static void loadNextRowsWithImage(char[][] nextRows, int x) {
@@ -57,7 +71,7 @@ static final Random rand = new Random();
     }
 
     // rename your function here
-    static char[][] getBunny() {
+    static char[][] getGiraffe() {
         char[][] img = new char[GIRAFEE_HEIGHT][GIRAFEE_WIDTH];
         // fill with empty space
         for (int y = 0; y < GIRAFEE_HEIGHT; y++) {
@@ -288,40 +302,75 @@ static final Random rand = new Random();
     }
 
 
-    //  static char[][] getCarrot() {
-    //      char[][] img = new char[GIRAFEE_HEIGHT][GIRAFEE_WIDTH];
-    //      // fill with empty space
-    //      for (int y = 0; y < GIRAFEE_HEIGHT; y++) {
-    //          for (int x = 0; x < GIRAFEE_WIDTH; x++) {
-    //        img[y][x] = ' ';
-    //          }
-    //      }
+      static char[][] getElephant() {
+          char[][] img = new char[GIRAFEE_HEIGHT][GIRAFEE_WIDTH];
+          // fill with empty space
+          for (int y = 0; y < GIRAFEE_HEIGHT; y++) {
+              for (int x = 0; x < GIRAFEE_WIDTH; x++) {
+            img[y][x] = ' ';
+              }
+          }
     //      // then fill individual characters
-    //      img[0][5] = '\\';
-    //      img[0][6] = ')';
-    //      img[0][7] = '/';
-    //      img[1][4] = '-';
-    //      img[1][5] = '-';
-    //      img[1][6] = 'v';
+         img[0][38] = '_';
+         img[0][39] = '_';
+         img[0][45] = '_';
+         img[0][46] = '_';
+         img[1][40] = '\\';
+         img[1][41] = '~';
+         img[1][42] = '~';
+         img[1][43] = '~';
+         img[1][44] = '/';
+         img[1][47] = '\\';
+         img[2][33] = '\'';
+         img[2][34] = '-';
+         img[2][35] = '-';
+         img[2][36] = '-';
+         img[2][37] = '-';
+         img[2][38] = '(';
+         img[2][42] = '.';
+         img[2][43] = '.';
+         img[2][48] = ')';
+         img[3][32] = '/';
+         img[3][49] = '\\';
+         img[3][40] = '_';
+         img[3][41] = '_';
+         img[3][44] = '_';
+         img[3][45] = '_';
+         img[4][31] = '/';
+         img[4][32] = '|';
+         img[4][42] = '\\';
+         img[4][44] = '|';
+         img[4][45] = '(';
+         img[5][30] = '/';
+         img[5][32] = '\\';
+         img[5][37] = '/';
+         img[5][39] = '\\';
+         img[5][42] = '/';
+         img[5][43] = '\\';
+         img[5][44] = '|';
+         img[5][45] = '(';
+         img[6][30] = '^';
+         img[6][32] = '|';
+         img[6][34] = '_';
+         img[6][35] = '_';
+         img[6][37] = '|';
+         img[6][40] = '|';
+         img[6][41] = '_';
+         img[6][42] = '_';
+         img[6][43] = '|';
+         img[6][44] = '-';
+         img[6][45] = '"';
+         
 
-    //      img[2][3] = '/';
-    //      img[2][4] = 'r';
-    //      img[2][6] = ')';
 
-    //      img[3][2] = '>';
-    //      img[3][3] = 'r';
-    //      img[3][4] = '.';
-    //      img[3][5] = '/';
 
-    //     img[4][1] = '/';
-    //      img[4][3] = '\'';
+      
 
-    //      img[5][0] = 'c';
-    //      img[5][1] = '_';
-    //     img[5][2] = '/';
 
-    //     return img;
-    //     }
+
+
+         return img;
+       }
 
     public static int getTerminalWidth() {
         String os = System.getProperty("os.name").toLowerCase();
