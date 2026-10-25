@@ -1,59 +1,63 @@
 import java.util.Random;
 
 public class ScrollArtV1 {
-static final int WIDTH = getTerminalWidth() - 1;
+static final int WIDTH = getTerminalWidth() ;
 static final int GIRAFEE_WIDTH = 54;
 static final int GIRAFEE_HEIGHT = 33;
 static final Random rand = new Random();
 
     public static void main(String[] args) throws InterruptedException {
         char[][] nextRows = new char[GIRAFEE_HEIGHT][WIDTH];
-        char[][] nextRows2 = new char[GIRAFEE_HEIGHT][WIDTH];
+        long startTime = System.currentTimeMillis();
+        int iterations = 0;
     
         for (int i = 0; i < nextRows.length; i++) {
             nextRows[i] = emptyRow();
-            nextRows2[i] = emptyRow();
+           
         }
     
-        char[][] giraffe = getGiraffe();
-        char[][] elephant = getElephant();
+      
     
-        for (int y = 0; y < GIRAFEE_HEIGHT; y++) {
-            for (int x = 0; x < GIRAFEE_WIDTH; x++) {
-                nextRows[y][x] = giraffe[y][x];
-                nextRows2[y][x] = elephant[y][x];
-            }
-        }
     
         while (true) {
-            char[] combinedRow = new char[WIDTH];
-            for (int x = 0; x < WIDTH; x++) {
-                if (x < nextRows2[0].length && nextRows2[0][x] != ' ') {
-                    combinedRow[x] = nextRows2[0][x];
-                } else {
-                    combinedRow[x] = nextRows[0][x];
+            // At each column on the top row, 1% chance to add a new image
+            for (int x = 0; x <= WIDTH - GIRAFEE_WIDTH; x++) {
+                if (rand.nextDouble() < 0.001 && canPlaceImage(nextRows, x)) {
+                    loadNextRowsWithImage(nextRows, x);
                 }
             }
-            System.out.println(new String(combinedRow));
-            
+            // Print and remove the top row
+            System.out.println(new String(nextRows[0]));
+            // Shift all rows uP
             shiftRowsUp(nextRows);
-            shiftRowsUp(nextRows2);
-            Thread.sleep(40);
+            Thread.sleep(40); // Delay in ms
+            long time = System.currentTimeMillis() - startTime;
+            iterations++;
         }
-        }
+    }
+        
+        private static void loadNextRowsWithImage(char[][] nextRows, int x) {
+            char[][] img;
+            if (rand.nextBoolean()) {
+                img = getGiraffe();
+            } else {
+                img = getElephant();
+            }
+            for (int iy = 0; iy < GIRAFEE_HEIGHT; iy++) {
+                for (int ix = 0; ix < GIRAFEE_WIDTH; ix++) {
+                    if (x + ix < WIDTH && img[iy][ix] != ' ') {
+                        nextRows[iy][x + ix] = img[iy][ix];
+                    }
+                }
+            }
+            }
+        
     
 
+    
 
-    // private static void loadNextRowsWithImage(char[][] nextRows, int x) {
-    //     char[][] img;
-    //     if (rand.nextBoolean()) {
-    //         img = getBunny();
-    //     for (int iy = 0; iy < GIRAFEE_HEIGHT; iy++) {
-    //         for (int ix = 0; ix < GIRAFEE_WIDTH; ix++) {
-    //             nextRows[iy][x + ix] = img[iy][ix];
-    //         }
         
-    // }
+     
 
     static void shiftRowsUp(char[][] nextRows) {
         for (int i = 1; i < nextRows.length; i++) {
@@ -69,8 +73,18 @@ static final Random rand = new Random();
         }
         return row;
     }
+    private static boolean canPlaceImage(char[][] nextRows, int x) {
+        for (int y = 0; y < GIRAFEE_HEIGHT; y++) {
+            for (int ix = 0; ix < GIRAFEE_WIDTH; ix++) {
+                if (x + ix < WIDTH && nextRows[y][x + ix] != ' ') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
-    // rename your function here
+   
     static char[][] getGiraffe() {
         char[][] img = new char[GIRAFEE_HEIGHT][GIRAFEE_WIDTH];
         // fill with empty space
@@ -310,7 +324,7 @@ static final Random rand = new Random();
             img[y][x] = ' ';
               }
           }
-    //      // then fill individual characters
+          // then fill individual characters
          img[0][38] = '_';
          img[0][39] = '_';
          img[0][45] = '_';
