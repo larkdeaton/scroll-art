@@ -3,9 +3,10 @@ import java.util.Random;
 public class ScrollArtV1 {
 static final int WIDTH = getTerminalWidth() ;
 static final int GIRAFEE_WIDTH = 54;
-static final int GIRAFEE_HEIGHT = 33;
+static final int GIRAFEE_HEIGHT = 34;
 static final Random rand = new Random();
-
+//IM SORRY I SPELLED GIRAFFE WRONG, BUT ONCE I REALISED ID ALREADY CHANGED EVERYTHING, AND I DIDN'T WANT TO CHANGE IT BACK
+//IM SORRY PT.2, I DIDN'T REALISE THAT YOU HAD CREATED A V2 THAT HAD THE SPACING, SO I ADDED MY OWN FUNCTIONS AND REDID SOME OF UR CODE TO MAKE IT WORK, U CAN IGNORE :(
     public static void main(String[] args) throws InterruptedException {
         char[][] nextRows = new char[GIRAFEE_HEIGHT][WIDTH];
         long startTime = System.currentTimeMillis();
@@ -22,7 +23,7 @@ static final Random rand = new Random();
         while (true) {
             // At each column on the top row, 1% chance to add a new image
             for (int x = 0; x <= WIDTH - GIRAFEE_WIDTH; x++) {
-                if (rand.nextDouble() < 0.001 && canPlaceImage(nextRows, x)) {
+                if (rand.nextDouble() < 0.001 && canPlaceImage(nextRows, x)) { //changed to make sure that they wouldn't overlap
                     loadNextRowsWithImage(nextRows, x);
                 }
             }
@@ -73,6 +74,7 @@ static final Random rand = new Random();
         }
         return row;
     }
+    //added this function to check if next row is clear, bc drawings kept overlapping
     private static boolean canPlaceImage(char[][] nextRows, int x) {
         for (int y = 0; y < GIRAFEE_HEIGHT; y++) {
             for (int ix = 0; ix < GIRAFEE_WIDTH; ix++) {
@@ -300,6 +302,10 @@ static final Random rand = new Random();
         img[32][11] = 'o';
         img[32][14] = 'o';
         img[32][15] = 'o';
+        img[33][0] = 'L';
+        img[33][1] = 'E';
+        img[33][2] = 'D';
+
     
       
       
