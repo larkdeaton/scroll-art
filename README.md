@@ -1,4 +1,5 @@
 # scroll-art
+#used primarily your code
 ## GIRAFFE:
 This giraffe came from my head, I drew it out on the graph paper before imputting it onto my code, via the 2D array that you made. I included a photo of the original drawing in the files of this code. 
 Citation points: 1 - I made it

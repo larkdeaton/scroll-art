@@ -87,7 +87,7 @@ static final Random rand = new Random();
     }
 
    
-    static char[][] getGiraffe() {
+    public static char[][] getGiraffe() {
         char[][] img = new char[GIRAFEE_HEIGHT][GIRAFEE_WIDTH];
         // fill with empty space
         for (int y = 0; y < GIRAFEE_HEIGHT; y++) {
@@ -96,7 +96,7 @@ static final Random rand = new Random();
             }
         }
         // then fill individual characters
-        img[1][12] = 'o';
+        img[1][12] = 'o'; //added all this to code for the giraffe
         img[2][10] = 'o';
         img[2][11] = 'o';
         img[2][13] = 'o';
@@ -331,7 +331,7 @@ static final Random rand = new Random();
               }
           }
           // then fill individual characters
-         img[0][38] = '_';
+         img[0][38] = '_'; //added for elephant, its shifted over to prevent overlaps when i wasn't looping it
          img[0][39] = '_';
          img[0][45] = '_';
          img[0][46] = '_';
@@ -383,8 +383,6 @@ static final Random rand = new Random();
          
 
 
-
-      
 
 
 
